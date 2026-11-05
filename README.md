@@ -30,17 +30,54 @@ O programa possui as seguintes funcionalidades:
 - Biblioteca `string`, para manipulação de textos;
 - Git e GitHub, para versionamento e disponibilização do código.
 
-## 4. Como compilar e executar
+## 4. Como clonar, compilar e executar
 
 ### Requisitos
 
-- Linux ou ambiente Linux acessível pelo terminal, como o Git Bash com um compilador configurado ou o WSL.
+- Linux com acesso ao terminal Bash.
+- Git instalado.
 - Compilador C++ `g++`.
-- Arquivo-fonte `maq_refri.cpp`.
+- Acesso à internet para clonar o repositório.
 
-### Verificar a instalação do compilador
+### 4.1. Verificar a instalação do Git
 
-No terminal, execute:
+No terminal Bash, execute:
+
+```bash
+git --version
+```
+
+Se o Git estiver instalado, será exibida a versão disponível.
+
+### 4.2. Clonar o repositório
+
+Copie a URL do repositório no GitHub e execute o comando abaixo, substituindo `URL_DO_REPOSITORIO` pela URL copiada:
+
+```bash
+git clone https://github.com/Marialaura-bs/Maq_refri.git
+```
+
+Esse comando cria uma cópia local do repositório no computador.
+
+### 4.3. Acessar a pasta do projeto
+
+Após clonar o repositório, entre na pasta criada:
+
+```bash
+cd Maq_refri
+```
+
+A pasta `Maq_refri` contém os arquivos do projeto, incluindo o código-fonte `maq_refri.cpp`.
+
+Para conferir os arquivos disponíveis, execute:
+
+```bash
+ls
+```
+
+### 4.4. Verificar a instalação do compilador
+
+Execute:
 
 ```bash
 g++ --version
@@ -48,23 +85,38 @@ g++ --version
 
 Se o compilador estiver instalado, será exibida a versão disponível.
 
-### Compilar o programa
+Caso o `g++` não esteja instalado, ele poderá ser instalado pelo terminal com:
 
-Entre na pasta onde está localizado o arquivo `maq_refri.cpp` e execute:
+```bash
+sudo apt update
+sudo apt install g++
+```
+
+### 4.5. Compilar o programa
+
+Dentro da pasta do projeto, execute:
 
 ```bash
 g++ -Wall -Wextra -std=c++17 maq_refri.cpp -o maq_refri
 ```
 
-Para executar:
+Esse comando compila o código-fonte e gera o arquivo executável `maq_refri`.
+
+As opções utilizadas são:
+
+- `-Wall` e `-Wextra`: habilitam avisos adicionais do compilador, ajudando a identificar possíveis problemas no código.
+- `-std=c++17`: seleciona o padrão C++17.
+- `-o maq_refri`: define o nome do arquivo executável gerado.
+
+### 4.6. Executar o programa
+
+Após a compilação, execute:
 
 ```bash
 ./maq_refri
 ```
 
-As opções `-Wall` e `-Wextra` habilitam avisos adicionais do compilador, ajudando a identificar possíveis problemas no código. A opção `-std=c++17` seleciona o padrão C++17.
-
-O comando `-o maq_refri` define o nome do arquivo executável gerado após a compilação.
+O programa será iniciado no terminal e aguardará a entrada dos comandos para simular o funcionamento da máquina de bebidas.
 
 ## 5. Organização do código
 
