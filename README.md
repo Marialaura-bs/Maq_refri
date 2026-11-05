@@ -32,29 +32,39 @@ O programa possui as seguintes funcionalidades:
 
 ## 4. Como compilar e executar
 
-É necessário possuir um compilador C++ instalado, como o g++.
+### Requisitos
 
-### Compilação
+- Linux ou ambiente Linux acessível pelo terminal, como o Git Bash com um compilador configurado ou o WSL.
+- Compilador C++ `g++`.
+- Arquivo-fonte `maq_refri.cpp`.
 
-No terminal, dentro da pasta do projeto, execute:
+### Verificar a instalação do compilador
 
-```bash
-g++ main.cpp -o maquina
-```
-
-### Execução
-
-No Linux ou no terminal do VS Code:
+No terminal, execute:
 
 ```bash
-./maquina
+g++ --version
 ```
 
-No Windows, caso esteja utilizando o terminal do MinGW:
+Se o compilador estiver instalado, será exibida a versão disponível.
+
+### Compilar o programa
+
+Entre na pasta onde está localizado o arquivo `maq_refri.cpp` e execute:
 
 ```bash
-.\maquina.exe
+g++ -Wall -Wextra -std=c++17 maq_refri.cpp -o maq_refri
 ```
+
+Para executar:
+
+```bash
+./maq_refri
+```
+
+As opções `-Wall` e `-Wextra` habilitam avisos adicionais do compilador, ajudando a identificar possíveis problemas no código. A opção `-std=c++17` seleciona o padrão C++17.
+
+O comando `-o maq_refri` define o nome do arquivo executável gerado após a compilação.
 
 ## 5. Organização do código
 
