@@ -43,6 +43,16 @@ void inserirMoeda(int &saldo, int &moedasArmazenadas, string botao) {
         else {
             // Informa que a moeda foi devolvida por ultrapassar o limite.
             cout << "Moeda devolvida" << endl;
+            // Exibe o valor que será devolvido ao cliente.
+            cout << "Saldo " << saldo / 100 << ",";
+
+            // Adiciona zero antes dos centavos, se necessário.
+            if (saldo % 100 < 10) {
+                cout << "0";
+            }
+
+            // Exibe os centavos do valor devolvido.
+            cout << saldo % 100 << endl;
         }
 
     }
@@ -83,7 +93,7 @@ int main() {
 
     // Declara uma variável que indica se a máquina está ligada.
     // Inicialmente, a máquina está desligada.
-    bool ligada = false;
+    bool Desligada = true;
 
     // Armazena o botão digitado pelo usuário.
     string botao;
@@ -99,21 +109,29 @@ int main() {
 
     // Valor total de moedas armazenadas pela máquina, em centavos.
     int moedasArmazenadas = 0;
-
     // Lê o primeiro botão digitado pelo usuário.
     cin >> botao;
 
-    // Verifica se o botão informado é inválido.
-    if (!validarBotao(botao)) {
-        cout << "Botão inválido" << endl; // Exibe uma mensagem de erro.
+    while (botao != "Q")
+    {
+        // Verifica se o botão informado é inválido.
+        if (!validarBotao(botao)) {
+            cout << "Botão inválido" << endl; // Exibe uma mensagem de erro.
+        }
+        else{
+            cout << "Botão não funciona para inicializar a máquina" << endl; // Exibe uma mensagem de erro.
+        }
+        // Lê botão digitado pelo usuário.
+        cin >> botao;
     }
+    
 
     // Se o botão inicial for Q, liga a máquina.
-    else if (botao == "Q") {
+    if (botao == "Q") {
 
         cout << "Máquina funcionando" << endl; // Informa que a máquina foi ligada.
 
-        ligada = true; // Atualiza o estado da máquina para ligada.
+        Desligada = false; // Atualiza o estado da máquina para ligada.
 
         // Exibe o saldo inicial do cliente.
         cout << "Saldo " << saldo / 100 << ",";
@@ -126,11 +144,9 @@ int main() {
         // Exibe os centavos do saldo inicial.
         cout << saldo % 100 << endl;
     }
-    else{
-        cout << "Botão não funciona para inicializar a máquina" << endl; // Exibe uma mensagem de erro.
-    }
-    // Executa os comandos enquanto a máquina estiver ligada.
-    while (ligada) {
+
+    // Executa os comandos enquanto a máquina não estiver desligada.
+    while (!Desligada) {
 
         // Lê o próximo botão digitado pelo usuário.
         cin >> botao;
@@ -250,7 +266,7 @@ int main() {
             // Só permite desligar a máquina quando o saldo do cliente for zero.
             if (saldo == 0) {
 
-                ligada = false; // Altera o estado da máquina para desligada.
+                Desligada = true; // Altera o estado da máquina para desligada.
 
                 // Exibe o título do relatório de vendas.
                 cout << "Resumo das vendas:" << endl;
