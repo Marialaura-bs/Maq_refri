@@ -114,13 +114,6 @@ int main() {
 
     while (botao != "Q")
     {
-        // Verifica se o botão informado é inválido.
-        if (!validarBotao(botao)) {
-            cout << "Botão inválido" << endl; // Exibe uma mensagem de erro.
-        }
-        else{
-            cout << "Botão não funciona para inicializar a máquina" << endl; // Exibe uma mensagem de erro.
-        }
         // Lê botão digitado pelo usuário.
         cin >> botao;
     }
