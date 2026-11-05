@@ -1,85 +1,82 @@
-
-#include <iostream> 
-#include <string>  
-using namespace std; 
+#include <iostream>
+#include <string>
+using namespace std;
 
 // Função que verifica se o botão informado é válido.
 bool validarBotao(string botao) {
 
-    // Verifica se o botão corresponde a alguma das opções permitidas.
     if (botao == "I50" || botao == "I100" ||
         botao == "A" || botao == "R" ||
         botao == "D" || botao == "Q") {
 
-        return true; // Retorna true caso o botão seja válido.
+        return true;
     }
 
-    return false; // Retorna false caso o botão não seja válido.
+    return false;
+}
+
+// Função que atualiza o estado de acordo com o saldo.
+void atualizarEstado(int saldo, string &estado) {
+
+    if (saldo == 0) {
+        estado = "0,00";
+    }
+    else if (saldo == 50) {
+        estado = "0,50";
+    }
+    else if (saldo == 100) {
+        estado = "1,00";
+    }
+    else if (saldo == 150) {
+        estado = "1,50";
+    }
+    else if (saldo == 200) {
+        estado = "2,00";
+    }
+    else if (saldo == 250) {
+        estado = "2,50";
+    }
+
 }
 
 // Função responsável por inserir moedas na máquina.
-void inserirMoeda(int &saldo, int &moedasArmazenadas, string botao) {
+void inserirMoeda(int &saldo, int &moedasArmazenadas,
+                  string botao, string &estado) {
 
-    // Verifica se a moeda inserida é de 50 centavos.
     if (botao == "I50") {
 
-        // Verifica se a inserção da moeda não ultrapassa o saldo máximo de R$ 2,50.
         if (saldo + 50 <= 250) {
 
-            saldo += 50; // Adiciona 50 centavos ao saldo do cliente.
-            moedasArmazenadas += 50; // Adiciona 50 centavos ao total armazenado pela máquina.
+            saldo += 50;
+            moedasArmazenadas += 50;
 
-            // Exibe a parte inteira do saldo e a vírgula.
-            cout << "Saldo " << saldo / 100 << ",";
+            // Atualiza o estado após a inserção da moeda.
+            atualizarEstado(saldo, estado);
 
-            // Verifica se os centavos possuem apenas um algarismo.
-            if (saldo % 100 < 10) {
-                cout << "0"; // Adiciona um zero antes dos centavos.
-            }
-
-            // Exibe os centavos e pula para a próxima linha.
-            cout << saldo % 100 << endl;
+            cout << "Saldo " << estado << endl;
         }
         else {
-            // Informa que a moeda foi devolvida por ultrapassar o limite.
             cout << "Moeda devolvida" << endl;
-            // Exibe o valor que será devolvido ao cliente.
-            cout << "Saldo " << saldo / 100 << ",";
-
-            // Adiciona zero antes dos centavos, se necessário.
-            if (saldo % 100 < 10) {
-                cout << "0";
-            }
-
-            // Exibe os centavos do valor devolvido.
-            cout << saldo % 100 << endl;
+            cout << "Saldo " << estado << endl;
         }
 
     }
 
-    // Verifica se a moeda inserida é de 100 centavos (R$ 1,00).
     else if (botao == "I100") {
 
-        // Verifica se a inserção da moeda não ultrapassa R$ 2,50.
         if (saldo + 100 <= 250) {
 
-            saldo += 100; // Adiciona R$ 1,00 ao saldo do cliente.
-            moedasArmazenadas += 100; // Adiciona R$ 1,00 ao total armazenado pela máquina.
+            saldo += 100;
+            moedasArmazenadas += 100;
 
-            // Exibe a parte inteira do saldo e a vírgula.
-            cout << "Saldo " << saldo / 100 << ",";
+            // Atualiza o estado após a inserção da moeda.
+            atualizarEstado(saldo, estado);
 
-            // Verifica se os centavos possuem apenas um algarismo.
-            if (saldo % 100 < 10) {
-                cout << "0"; // Adiciona um zero antes dos centavos.
-            }
-
-            // Exibe os centavos e pula para a próxima linha.
-            cout << saldo % 100 << endl;
+            cout << "Saldo " << estado << endl;
         }
         else {
-            // Informa que a moeda foi devolvida por ultrapassar o limite.
             cout << "Moeda devolvida" << endl;
+            cout << "Saldo " << estado << endl;
         }
 
     }
@@ -88,214 +85,145 @@ void inserirMoeda(int &saldo, int &moedasArmazenadas, string botao) {
 
 int main() {
 
-    // Informa que a máquina está aguardando ser ligada.
     cout << "Aguarde o início..." << endl;
 
-    // Declara uma variável que indica se a máquina está ligada.
-    // Inicialmente, a máquina está desligada.
-    bool Desligada = true;
-
-    // Armazena o botão digitado pelo usuário.
     string botao;
 
-    // Saldo atual do cliente, inicialmente R$ 0,00.
+    // Saldo do cliente em centavos.
     int saldo = 0;
 
-    // Contador de águas vendidas.
+    // Estado inicial da máquina.
+    string estado = "Desligada";
+
     int aguasVendidas = 0;
-
-    // Contador de refrigerantes vendidos.
     int refrigerantesVendidos = 0;
-
-    // Valor total de moedas armazenadas pela máquina, em centavos.
     int moedasArmazenadas = 0;
-    // Lê o primeiro botão digitado pelo usuário.
+
+    // Aguarda o comando Q para inicializar a máquina.
     cin >> botao;
 
-    while (botao != "Q")
-    {
-        // Lê botão digitado pelo usuário.
-        cin >> botao;
-    }
-    
+    while (estado == "Desligada") {
 
-    // Se o botão inicial for Q, liga a máquina.
-    if (botao == "Q") {
-
-        cout << "Máquina funcionando" << endl; // Informa que a máquina foi ligada.
-
-        Desligada = false; // Atualiza o estado da máquina para ligada.
-
-        // Exibe o saldo inicial do cliente.
-        cout << "Saldo " << saldo / 100 << ",";
-
-        // Adiciona zero antes dos centavos, se necessário.
-        if (saldo % 100 < 10) {
-            cout << "0";
+        if (!validarBotao(botao)) {
+            cout << "Botão inválido" << endl;
+        }
+        else if (botao != "Q") {
+            cout << "Botão não funciona para inicializar a máquina" << endl;
         }
 
-        // Exibe os centavos do saldo inicial.
-        cout << saldo % 100 << endl;
+        if (botao == "Q") {
+
+            cout << "Máquina funcionando" << endl;
+
+            // Atualiza o estado para o saldo inicial.
+            atualizarEstado(saldo, estado);
+
+            cout << "Saldo " << estado << endl;
+
+            break;
+        }
+
+        cin >> botao;
     }
 
-    // Executa os comandos enquanto a máquina não estiver desligada.
-    while (!Desligada) {
+    // Executa enquanto a máquina estiver ligada.
+    while (estado != "Desligada") {
 
-        // Lê o próximo botão digitado pelo usuário.
         cin >> botao;
 
         // Verifica se o botão informado é válido.
         if (!validarBotao(botao)) {
-            cout << "Botão inválido" << endl; // Exibe a mensagem de erro.
-            continue; // Volta ao início do while para ler outro botão.
+            cout << "Botão inválido" << endl;
+            continue;
         }
 
-        // Chama a função que trata a inserção de moedas.
-        inserirMoeda(saldo, moedasArmazenadas, botao);
+        // Trata a inserção de moedas.
+        inserirMoeda(saldo, moedasArmazenadas, botao, estado);
 
-        // Verifica se o botão selecionado corresponde à compra de água.
+        // Compra de água.
         if (botao == "A") {
 
-            // Verifica se o cliente possui pelo menos R$ 1,50.
             if (saldo >= 150) {
 
-                saldo -= 150; // Desconta R$ 1,50 do saldo do cliente.
+                saldo -= 150;
+                aguasVendidas++;
 
-                aguasVendidas++; // Aumenta em 1 o contador de águas vendidas.
+                atualizarEstado(saldo, estado);
 
-                cout << "Água entregue" << endl; // Informa que a água foi entregue.
-
-                // Exibe a parte inteira do saldo restante.
-                cout << "Saldo " << saldo / 100 << ",";
-
-                // Adiciona zero antes dos centavos, se necessário.
-                if (saldo % 100 < 10) {
-                    cout << "0";
-                }
-
-                // Exibe os centavos do saldo restante.
-                cout << saldo % 100 << endl;
+                cout << "Água entregue" << endl;
+                cout << "Saldo " << estado << endl;
             }
             else {
-                // Informa que o saldo não é suficiente para comprar água.
                 cout << "Saldo insuficiente" << endl;
             }
-
         }
 
-        // Verifica se o botão selecionado corresponde à compra de refrigerante.
+        // Compra de refrigerante.
         if (botao == "R") {
 
-            // Verifica se o cliente possui pelo menos R$ 2,00.
             if (saldo >= 200) {
 
-                saldo -= 200; // Desconta R$ 2,00 do saldo do cliente.
+                saldo -= 200;
+                refrigerantesVendidos++;
 
-                refrigerantesVendidos++; // Aumenta em 1 o contador de refrigerantes vendidos.
+                atualizarEstado(saldo, estado);
 
-                cout << "Refrigerante entregue" << endl; // Informa que o refrigerante foi entregue.
-
-                // Exibe a parte inteira do saldo restante.
-                cout << "Saldo " << saldo / 100 << ",";
-
-                // Adiciona zero antes dos centavos, se necessário.
-                if (saldo % 100 < 10) {
-                    cout << "0";
-                }
-
-                // Exibe os centavos do saldo restante.
-                cout << saldo % 100 << endl;
+                cout << "Refrigerante entregue" << endl;
+                cout << "Saldo " << estado << endl;
             }
             else {
-                // Informa que o saldo não é suficiente para comprar refrigerante.
                 cout << "Saldo insuficiente" << endl;
             }
-
         }
 
-        // Verifica se o botão selecionado corresponde à devolução do saldo.
+        // Devolução do saldo.
         if (botao == "D") {
 
-            // Verifica se existe algum valor para devolver ao cliente.
-            if (saldo > 0){
+            if (saldo > 0) {
 
-                // Exibe o valor que será devolvido ao cliente.
-                cout << "Devolvido " << saldo / 100 << ",";
+                cout << "Devolvido " << estado << endl;
 
-                // Adiciona zero antes dos centavos, se necessário.
-                if (saldo % 100 < 10) {
-                    cout << "0";
-                }
-
-                // Exibe os centavos do valor devolvido.
-                cout << saldo % 100 << endl;
-
-                // Retira do total armazenado o valor devolvido ao cliente.
                 moedasArmazenadas -= saldo;
-
-                // Zera o saldo do cliente após a devolução.
                 saldo = 0;
 
-                // Exibe o saldo atualizado do cliente.
-                cout << "Saldo " << saldo / 100 << ",";
+                atualizarEstado(saldo, estado);
 
-                // Adiciona zero antes dos centavos, se necessário.
-                if (saldo % 100 < 10) {
-                    cout << "0";
-                }
-
-                // Exibe os centavos do saldo zerado.
-                cout << saldo % 100 << endl;
+                cout << "Saldo " << estado << endl;
             }
-            else{
-                // Informa que não existe saldo para devolver.
+            else {
                 cout << "Não há saldo a ser devolvido" << endl;
             }
         }
 
-        // Verifica se o botão selecionado corresponde ao desligamento da máquina.
+        // Desligamento da máquina.
         if (botao == "Q") {
 
-            // Só permite desligar a máquina quando o saldo do cliente for zero.
             if (saldo == 0) {
 
-                Desligada = true; // Altera o estado da máquina para desligada.
+                // Atualiza o estado da máquina para desligada.
+                estado = "Desligada";
 
-                // Exibe o título do relatório de vendas.
                 cout << "Resumo das vendas:" << endl;
-
-                // Exibe a quantidade de águas vendidas.
                 cout << aguasVendidas << " Agua" << endl;
-
-                // Exibe a quantidade de refrigerantes vendidos.
                 cout << refrigerantesVendidos << " Refrigerante" << endl;
-
-                // Exibe uma linha em branco para separar as informações.
                 cout << endl;
 
-                // Exibe a parte inteira do total acumulado pela máquina.
-                cout << "Total acumulado: " << moedasArmazenadas / 100 << ",";
+                cout << "Total acumulado: "
+                     << moedasArmazenadas / 100 << ",";
 
-                // Adiciona zero antes dos centavos, se necessário.
                 if (moedasArmazenadas % 100 < 10) {
                     cout << "0";
                 }
 
-                // Exibe os centavos do total acumulado.
                 cout << moedasArmazenadas % 100 << endl;
 
-                // Informa que a máquina foi desligada.
-                cout << "Desligado" << endl;
+                cout << estado << endl;
             }
             else {
-                // Informa que o cliente precisa devolver o saldo antes de desligar.
                 cout << "Devolva o saldo antes de desligar" << endl;
             }
-
         }
-
     }
 
-    // Finaliza a execução do programa e retorna 0, indicando encerramento normal.
     return 0;
 }
